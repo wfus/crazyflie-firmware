@@ -1027,15 +1027,15 @@ static void stateEstimatorUpdateWithTDOA(tdoaMeasurement_t *tdoa)
       h[STATE_Z] = (dz1 / d1 - dz0 / d0);
 
       vector_t jacobian = {
-        .x = h[STATE_X],
-        .y = h[STATE_Y],
-        .z = h[STATE_Z],
+        h[STATE_X],
+        h[STATE_Y],
+        h[STATE_Z],
       };
 
       point_t estimatedPosition = {
-        .x = S[STATE_X],
-        .y = S[STATE_Y],
-        .z = S[STATE_Z],
+        S[STATE_X],
+        S[STATE_Y],
+        S[STATE_Z],
       };
 
       bool sampleIsGood = outlierFilterVaildateTdoaSteps(tdoa, error, &jacobian, &estimatedPosition);
@@ -1281,28 +1281,28 @@ static void stateEstimatorExternalizeState(state_t *state, sensorData_t *sensors
 {
   // position state is already in world frame
   state->position = (point_t){
-      .timestamp = tick,
-      .x = S[STATE_X],
-      .y = S[STATE_Y],
-      .z = S[STATE_Z]
+      tick,
+      S[STATE_X],
+      S[STATE_Y],
+      S[STATE_Z]
   };
 
   // velocity is in body frame and needs to be rotated to world frame
   state->velocity = (velocity_t){
-      .timestamp = tick,
-      .x = R[0][0]*S[STATE_PX] + R[0][1]*S[STATE_PY] + R[0][2]*S[STATE_PZ],
-      .y = R[1][0]*S[STATE_PX] + R[1][1]*S[STATE_PY] + R[1][2]*S[STATE_PZ],
-      .z = R[2][0]*S[STATE_PX] + R[2][1]*S[STATE_PY] + R[2][2]*S[STATE_PZ]
+      tick,
+      R[0][0]*S[STATE_PX] + R[0][1]*S[STATE_PY] + R[0][2]*S[STATE_PZ],
+      R[1][0]*S[STATE_PX] + R[1][1]*S[STATE_PY] + R[1][2]*S[STATE_PZ],
+      R[2][0]*S[STATE_PX] + R[2][1]*S[STATE_PY] + R[2][2]*S[STATE_PZ]
   };
 
   // Accelerometer measurements are in the body frame and need to be rotated to world frame.
   // Furthermore, the legacy code requires acc.z to be acceleration without gravity.
   // Finally, note that these accelerations are in Gs, and not in m/s^2, hence - 1 for removing gravity
   state->acc = (acc_t){
-      .timestamp = tick,
-      .x = R[0][0]*sensors->acc.x + R[0][1]*sensors->acc.y + R[0][2]*sensors->acc.z,
-      .y = R[1][0]*sensors->acc.x + R[1][1]*sensors->acc.y + R[1][2]*sensors->acc.z,
-      .z = R[2][0]*sensors->acc.x + R[2][1]*sensors->acc.y + R[2][2]*sensors->acc.z - 1
+      tick,
+      R[0][0]*sensors->acc.x + R[0][1]*sensors->acc.y + R[0][2]*sensors->acc.z,
+      R[1][0]*sensors->acc.x + R[1][1]*sensors->acc.y + R[1][2]*sensors->acc.z,
+      R[2][0]*sensors->acc.x + R[2][1]*sensors->acc.y + R[2][2]*sensors->acc.z - 1
   };
 
   // convert the new attitude into Euler YPR
@@ -1312,20 +1312,20 @@ static void stateEstimatorExternalizeState(state_t *state, sensorData_t *sensors
 
   // Save attitude, adjusted for the legacy CF2 body coordinate system
   state->attitude = (attitude_t){
-      .timestamp = tick,
-      .roll = roll*RAD_TO_DEG,
-      .pitch = -pitch*RAD_TO_DEG,
-      .yaw = yaw*RAD_TO_DEG
+      tick,
+      roll*RAD_TO_DEG,
+      -pitch*RAD_TO_DEG,
+      yaw*RAD_TO_DEG
   };
 
   // Save quaternion, hopefully one day this could be used in a better controller.
   // Note that this is not adjusted for the legacy coordinate system
   state->attitudeQuaternion = (quaternion_t){
-      .timestamp = tick,
-      .w = q[0],
-      .x = q[1],
-      .y = q[2],
-      .z = q[3]
+      tick,
+      q[0],
+      q[1],
+      q[2],
+      q[3]
   };
 }
 

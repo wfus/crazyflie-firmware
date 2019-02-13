@@ -171,24 +171,26 @@ PROJ_OBJ += deck_analog.o
 PROJ_OBJ += deck_spi.o
 
 # Decks
+# TFMICRO EDIT: First comment out decks unless we really need them
+# because they contain designated intializers which our c++ thing doesnt support
 PROJ_OBJ += bigquad.o
 PROJ_OBJ += rzr.o
 PROJ_OBJ += ledring12.o
 PROJ_OBJ += buzzdeck.o
 PROJ_OBJ += gtgps.o
 PROJ_OBJ += cppmdeck.o
-PROJ_OBJ += usddeck.o
-PROJ_OBJ += zranger.o zranger2.o
-PROJ_OBJ += locodeck.o
+# PROJ_OBJ += usddeck.o
+# PROJ_OBJ += zranger.o zranger2.o
+# PROJ_OBJ += locodeck.o
 PROJ_OBJ += clockCorrectionEngine.o
-PROJ_OBJ += lpsTwrTag.o
-PROJ_OBJ += lpsTdoa2Tag.o
-PROJ_OBJ += lpsTdoa3Tag.o tdoaEngine.o tdoaStats.o tdoaStorage.o
+# PROJ_OBJ += lpsTwrTag.o
+# PROJ_OBJ += lpsTdoa2Tag.o
+# PROJ_OBJ += lpsTdoa3Tag.o tdoaEngine.o tdoaStats.o tdoaStorage.o
 PROJ_OBJ += outlierFilter.o
-PROJ_OBJ += flowdeck_v1v2.o
-PROJ_OBJ += oa.o
-PROJ_OBJ += multiranger.o
-PROJ_OBJ += lighthouse.o
+# PROJ_OBJ += flowdeck_v1v2.o
+# PROJ_OBJ += oa.o
+# PROJ_OBJ += multiranger.o
+# PROJ_OBJ += lighthouse.o
 
 ifeq ($(LPS_TDOA_ENABLE), 1)
 CFLAGS += -DLPS_TDOA_ENABLE
@@ -214,8 +216,8 @@ endif
 endif
 
 #Deck tests
-PROJ_OBJ += exptest.o
-PROJ_OBJ += exptestRR.o
+# PROJ_OBJ += exptest.o
+# PROJ_OBJ += exptestRR.o
 #PROJ_OBJ += bigquadtest.o
 #PROJ_OBJ += uarttest.o
 
@@ -267,7 +269,7 @@ else
 	# Fail on warnings
 	# TFMICRO EDIT: Don't fail on warnings because of c++ usage
   # CFLAGS += -Os -g3 -Werror
-  CFLAGS += -Os -g3
+  CFLAGS += -Os -g3 -w
 endif
 
 ifeq ($(LTO), 1)

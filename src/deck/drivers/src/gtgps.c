@@ -44,6 +44,8 @@
 #include "log.h"
 #include "param.h"
 
+/*
+
 static bool isInit;
 
 #define LEN_TOKEN 5
@@ -283,7 +285,7 @@ static void gtgpsInit(DeckInfo *info)
   uart1Init(9600);
 
   xTaskCreate(gtgpsTask, "GTGPS",
-              configMINIMAL_STACK_SIZE, NULL, /*priority*/1, NULL);
+              configMINIMAL_STACK_SIZE, NULL, 1, NULL);
 
   isInit = true;
 }
@@ -324,3 +326,4 @@ LOG_ADD(LOG_FLOAT, hAcc, &b.pdop)
 LOG_ADD(LOG_INT32, nsat, &m.nsat)
 LOG_ADD(LOG_INT32, fix, &b.fix)
 LOG_GROUP_STOP(gps)
+*/

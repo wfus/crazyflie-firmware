@@ -298,6 +298,12 @@ typedef struct {
   Melody * melody;
 } EffectCall;
 
+static EffectCall test = {&off, 0, &factory_test};
+static EffectCall effects[] = {test, test, test, test, test, test, test, test,
+  test, test, test, test, test, test, test, test, test, test, test, test, test};
+
+//TFMICRO EDIT: compiler doesn't support this type of initialization
+/*
 static EffectCall effects[] = {
     [SND_OFF] = {.call = &off},
     [FACTORY_TEST] = {.call = &melodyplayer, .melody = &factory_test},
@@ -314,7 +320,7 @@ static EffectCall effects[] = {
     {.call = &bypass},
     {.call = &siren},
     {.call = &tilt}
-};
+}; */
 
 static xTimerHandle timer;
 static uint32_t counter = 0;

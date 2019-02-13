@@ -792,18 +792,21 @@ PARAM_ADD(PARAM_UINT32, fadeColor, &fadeColor)
 PARAM_ADD(PARAM_FLOAT, fadeTime, &fadeTime)
 PARAM_GROUP_STOP(ring)
 
+
+/*
 static const DeckDriver ledring12_deck = {
-  .vid = 0xBC,
-  .pid = 0x01,
-  .name = "bcLedRing",
+  0xBC,
+  0x01,
+  "bcLedRing",
 
-  .usedPeriph = DECK_USING_TIMER3,
-  .usedGpio = DECK_USING_IO_2 | DECK_USING_IO_3,
+  DECK_USING_TIMER3,
+  DECK_USING_IO_2 | DECK_USING_IO_3,
 
-  .init = ledring12Init,
+  ledring12Init,
 };
 
 DECK_DRIVER(ledring12_deck);
+*/
 
 PARAM_GROUP_START(deck)
 PARAM_ADD(PARAM_UINT8 | PARAM_RONLY, bcLedRing, &isInit)

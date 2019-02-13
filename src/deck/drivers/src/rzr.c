@@ -110,14 +110,14 @@ static bool rzrTest()
 }
 
 static const DeckDriver rzr_deck = {
-//  .vid = 0xBC,
-//  .pid = 0x08,
-  .name = "bcRZR",
+//  0xBC,
+//  0x08,
+  "bcRZR",
 
-  .usedPeriph = 0,
-  .usedGpio = 0,
-  .init = rzrInit,
-  .test = rzrTest,
+  0,
+  0,
+  rzrInit,
+  rzrTest,
 };
 
 DECK_DRIVER(rzr_deck);
