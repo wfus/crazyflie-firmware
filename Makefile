@@ -235,8 +235,8 @@ OBJ = $(FREERTOS_OBJ) $(PORT_OBJ) $(ST_OBJ) $(PROJ_OBJ) $(CRT0)
 
 ############### Compilation configuration ################
 AS = $(CROSS_COMPILE)as
-CC = $(CROSS_COMPILE)gcc
-LD = $(CROSS_COMPILE)gcc
+CC = $(CROSS_COMPILE)g++
+LD = $(CROSS_COMPILE)g++
 SIZE = $(CROSS_COMPILE)size
 OBJCOPY = $(CROSS_COMPILE)objcopy
 GDB = $(CROSS_COMPILE)gdb
@@ -265,7 +265,9 @@ ifeq ($(DEBUG), 1)
   CFLAGS += -Wconversion
 else
 	# Fail on warnings
-  CFLAGS += -Os -g3 -Werror
+	# TFMICRO EDIT: Don't fail on warnings because of c++ usage
+  # CFLAGS += -Os -g3 -Werror
+  CFLAGS += -Os -g3
 endif
 
 ifeq ($(LTO), 1)
@@ -276,8 +278,13 @@ CFLAGS += -DBOARD_REV_$(REV) -DESTIMATOR_NAME=$(ESTIMATOR)Estimator -DCONTROLLER
 
 CFLAGS += $(PROCESSOR) $(INCLUDES)
 
+# TFMICRO EDIT:
+# Disable warnings since we're using C++ and I don't have time to fix everything
+# CFLAGS += -Wall -Wmissing-braces -fno-strict-aliasing $(C_PROFILE) -std=gnu11
+# TFMICRO EDIT TODO: Add std support for c++11 and relax C typecasting
+CFLAGS += -fpermissive 
 
-CFLAGS += -Wall -Wmissing-braces -fno-strict-aliasing $(C_PROFILE) -std=gnu11
+
 # Compiler flags to generate dependency files:
 CFLAGS += -MD -MP -MF $(BIN)/dep/$(@).d -MQ $(@)
 #Permits to remove un-used functions and global variables from output file

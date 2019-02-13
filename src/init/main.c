@@ -24,6 +24,8 @@
  * main.c - Containing the main function.
  */
 
+
+extern "C" {
 /* Personal configs */
 #include "FreeRTOSConfig.h"
 
@@ -41,6 +43,7 @@
 
 /* ST includes */
 #include "stm32fxxx.h"
+}
 
 int main() 
 {

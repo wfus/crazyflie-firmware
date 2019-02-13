@@ -57,7 +57,9 @@
 #define LOG_ERROR(...)
 #endif
 
-
+// C++ compiler doesn't support this type of initialization
+// so we'll jank it up and hardcode it lol. UINT8 is 1 and FP16 is 8.
+/*
 static const uint8_t typeLength[] = {
   [LOG_UINT8]  = 1,
   [LOG_UINT16] = 2,
@@ -67,7 +69,8 @@ static const uint8_t typeLength[] = {
   [LOG_INT32]  = 4,
   [LOG_FLOAT]  = 4,
   [LOG_FP16]   = 2,
-};
+};*/
+static const uint8_t typeLength[] = {0, 1, 2, 4, 1, 2, 4, 4, 2};
 
 // Maximum log payload length (4 bytes are used for block id and timestamp)
 #define LOG_MAX_LEN 26
