@@ -48,8 +48,8 @@ static void buzzDeckOff()
 }
 
 static struct buzzerControl buzzDeckCtrl = {
-  .on         = buzzDeckOn,
-  .off        = buzzDeckOff
+  buzzDeckOn,
+  buzzDeckOff
 };
 
 static void buzzDeckInit(DeckInfo *info)
@@ -65,14 +65,13 @@ static void buzzDeckInit(DeckInfo *info)
 }
 
 static const DeckDriver buzzer_deck = {
-  .vid = 0xBC,
-  .pid = 0x04,
-  .name = "bcBuzzer",
-
-  .usedPeriph = DECK_USING_TIMER5,
-  .usedGpio = DECK_USING_TX2 | DECK_USING_RX2,
-
-  .init = buzzDeckInit,
+  0xBC,
+  0x04,
+  "bcBuzzer",
+  DECK_USING_TIMER5,
+  DECK_USING_TX2 | DECK_USING_RX2,
+  0, 0,
+  buzzDeckInit, 0
 };
 
 DECK_DRIVER(buzzer_deck);
