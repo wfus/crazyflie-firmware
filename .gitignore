@@ -1,4 +1,5 @@
 build_info.json
+*.DS_Store
 
 ^bin/dep/all
 bin/*
