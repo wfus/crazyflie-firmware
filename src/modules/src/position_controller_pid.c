@@ -77,81 +77,81 @@ static const float thrustScale = 1000.0f;
 #define POSITION_LPF_ENABLE true
 
 #ifndef UNIT_TEST
-static struct this_s this = {
-  .pidVX = {
-    .init = {
-      .kp = 25.0f,
-      .ki = 1.0f,
-      .kd = 0.0f,
+static struct this_s pid_this = {
+  {
+    {
+      25.0f,
+      1.0f,
+      0.0f,
     },
-    .pid.dt = DT,
+    DT,
   },
 
-  .pidVY = {
-    .init = {
-      .kp = 25.0f,
-      .ki = 1.0f,
-      .kd = 0.0f,
+  {
+    {
+      25.0f,
+      1.0f,
+      0.0f,
     },
-    .pid.dt = DT,
+    DT,
   },
 
-  .pidVZ = {
-    .init = {
-      .kp = 25,
-      .ki = 15,
-      .kd = 0,
+  {
+    {
+      25,
+      15,
+      0,
     },
-    .pid.dt = DT,
+    DT,
   },
 
-  .pidX = {
-    .init = {
-      .kp = 2.0f,
-      .ki = 0,
-      .kd = 0,
+  {
+    {
+      2.0f,
+      0,
+      0,
     },
-    .pid.dt = DT,
+    DT,
   },
 
-  .pidY = {
-    .init = {
-      .kp = 2.0f,
-      .ki = 0,
-      .kd = 0,
+  {
+    {
+      2.0f,
+      0,
+      0,
     },
-    .pid.dt = DT,
+    DT,
   },
 
-  .pidZ = {
-    .init = {
-      .kp = 2.0f,
-      .ki = 0.5,
-      .kd = 0,
+  {
+    {
+      2.0f,
+      0.5,
+      0,
     },
-    .pid.dt = DT,
+    DT,
   },
 
-  .thrustBase = 36000,
-  .thrustMin  = 20000,
+  36000,
+  20000,
 };
 #endif
 
 void positionControllerInit()
 {
-  pidInit(&this.pidX.pid, this.pidX.setpoint, this.pidX.init.kp, this.pidX.init.ki, this.pidX.init.kd,
-      this.pidX.pid.dt, POSITION_RATE, POSITION_LPF_CUTOFF_FREQ, POSITION_LPF_ENABLE);
-  pidInit(&this.pidY.pid, this.pidY.setpoint, this.pidY.init.kp, this.pidY.init.ki, this.pidY.init.kd,
-      this.pidY.pid.dt, POSITION_RATE, POSITION_LPF_CUTOFF_FREQ, POSITION_LPF_ENABLE);
-  pidInit(&this.pidZ.pid, this.pidZ.setpoint, this.pidZ.init.kp, this.pidZ.init.ki, this.pidZ.init.kd,
-      this.pidZ.pid.dt, POSITION_RATE, POSITION_LPF_CUTOFF_FREQ, POSITION_LPF_ENABLE);
+  pidInit(&pid_this.pidX.pid, pid_this.pidX.setpoint, pid_this.pidX.init.kp, pid_this.pidX.init.ki, pid_this.pidX.init.kd,
+      pid_this.pidX.pid.dt, POSITION_RATE, POSITION_LPF_CUTOFF_FREQ, POSITION_LPF_ENABLE);
+  pidInit(&pid_this.pidY.pid, pid_this.pidY.setpoint, pid_this.pidY.init.kp, pid_this.pidY.init.ki, pid_this.pidY.init.kd,
+      pid_this.pidY.pid.dt, POSITION_RATE, POSITION_LPF_CUTOFF_FREQ, POSITION_LPF_ENABLE);
+  pidInit(&pid_this.pidZ.pid, pid_this.pidZ.setpoint, pid_this.pidZ.init.kp, pid_this.pidZ.init.ki, pid_this.pidZ.init.kd,
+      pid_this.pidZ.pid.dt, POSITION_RATE, POSITION_LPF_CUTOFF_FREQ, POSITION_LPF_ENABLE);
 
-  pidInit(&this.pidVX.pid, this.pidVX.setpoint, this.pidVX.init.kp, this.pidVX.init.ki, this.pidVX.init.kd,
-      this.pidVX.pid.dt, POSITION_RATE, POSITION_LPF_CUTOFF_FREQ, POSITION_LPF_ENABLE);
-  pidInit(&this.pidVY.pid, this.pidVY.setpoint, this.pidVY.init.kp, this.pidVY.init.ki, this.pidVY.init.kd,
-      this.pidVY.pid.dt, POSITION_RATE, POSITION_LPF_CUTOFF_FREQ, POSITION_LPF_ENABLE);
-  pidInit(&this.pidVZ.pid, this.pidVZ.setpoint, this.pidVZ.init.kp, this.pidVZ.init.ki, this.pidVZ.init.kd,
-      this.pidVZ.pid.dt, POSITION_RATE, POSITION_LPF_CUTOFF_FREQ, POSITION_LPF_ENABLE);
+  pidInit(&pid_this.pidVX.pid, pid_this.pidVX.setpoint, pid_this.pidVX.init.kp, pid_this.pidVX.init.ki, pid_this.pidVX.init.kd,
+      pid_this.pidVX.pid.dt, POSITION_RATE, POSITION_LPF_CUTOFF_FREQ, POSITION_LPF_ENABLE);
+  pidInit(&pid_this.pidVY.pid, pid_this.pidVY.setpoint, pid_this.pidVY.init.kp, pid_this.pidVY.init.ki, pid_this.pidVY.init.kd,
+      pid_this.pidVY.pid.dt, POSITION_RATE, POSITION_LPF_CUTOFF_FREQ, POSITION_LPF_ENABLE);
+  pidInit(&pid_this.pidVZ.pid, pid_this.pidVZ.setpoint, pid_this.pidVZ.init.kp, pid_this.pidVZ.init.ki, pid_this.pidVZ.init.kd,
+      pid_this.pidVZ.pid.dt, POSITION_RATE, POSITION_LPF_CUTOFF_FREQ, POSITION_LPF_ENABLE);
 }
 
 static float runPid(float input, struct pidAxis_s *axis, float setpoint, float dt) {
@@ -164,11 +164,11 @@ static float runPid(float input, struct pidAxis_s *axis, float setpoint, float d
 void positionController(float* thrust, attitude_t *attitude, setpoint_t *setpoint,
                                                              const state_t *state)
 {
-  this.pidX.pid.outputLimit = xyVelMax * velMaxOverhead;
-  this.pidY.pid.outputLimit = xyVelMax * velMaxOverhead;
+  pid_this.pidX.pid.outputLimit = xyVelMax * velMaxOverhead;
+  pid_this.pidY.pid.outputLimit = xyVelMax * velMaxOverhead;
   // The ROS landing detector will prematurely trip if
   // this value is below 0.5
-  this.pidZ.pid.outputLimit = fmaxf(zVelMax, 0.5f)  * velMaxOverhead;
+  pid_this.pidZ.pid.outputLimit = fmaxf(zVelMax, 0.5f)  * velMaxOverhead;
 
   float cosyaw = cosf(state->attitude.yaw * (float)M_PI / 180.0f);
   float sinyaw = sinf(state->attitude.yaw * (float)M_PI / 180.0f);
@@ -177,17 +177,17 @@ void positionController(float* thrust, attitude_t *attitude, setpoint_t *setpoin
 
   // X, Y
   if (setpoint->mode.x == modeAbs) {
-    setpoint->velocity.x = runPid(state->position.x, &this.pidX, setpoint->position.x, DT);
+    setpoint->velocity.x = runPid(state->position.x, &pid_this.pidX, setpoint->position.x, DT);
   } else if (setpoint->velocity_body) {
     setpoint->velocity.x = bodyvx * cosyaw - bodyvy * sinyaw;
   }
   if (setpoint->mode.y == modeAbs) {
-    setpoint->velocity.y = runPid(state->position.y, &this.pidY, setpoint->position.y, DT);
+    setpoint->velocity.y = runPid(state->position.y, &pid_this.pidY, setpoint->position.y, DT);
   } else if (setpoint->velocity_body) {
     setpoint->velocity.y = bodyvy * cosyaw + bodyvx * sinyaw;
   }
   if (setpoint->mode.z == modeAbs) {
-    setpoint->velocity.z = runPid(state->position.z, &this.pidZ, setpoint->position.z, DT);
+    setpoint->velocity.z = runPid(state->position.z, &pid_this.pidZ, setpoint->position.z, DT);
   }
 
   velocityController(thrust, attitude, setpoint, state);
@@ -196,15 +196,15 @@ void positionController(float* thrust, attitude_t *attitude, setpoint_t *setpoin
 void velocityController(float* thrust, attitude_t *attitude, setpoint_t *setpoint,
                                                              const state_t *state)
 {
-  this.pidVX.pid.outputLimit = rpLimit * rpLimitOverhead;
-  this.pidVY.pid.outputLimit = rpLimit * rpLimitOverhead;
+  pid_this.pidVX.pid.outputLimit = rpLimit * rpLimitOverhead;
+  pid_this.pidVY.pid.outputLimit = rpLimit * rpLimitOverhead;
   // Set the output limit to the maximum thrust range
-  this.pidVZ.pid.outputLimit = (UINT16_MAX / 2 / thrustScale);
-  //this.pidVZ.pid.outputLimit = (this.thrustBase - this.thrustMin) / thrustScale;
+  pid_this.pidVZ.pid.outputLimit = (UINT16_MAX / 2 / thrustScale);
+  //pid_this.pidVZ.pid.outputLimit = (pid_this.thrustBase - pid_this.thrustMin) / thrustScale;
 
   // Roll and Pitch
-  float rollRaw  = runPid(state->velocity.x, &this.pidVX, setpoint->velocity.x, DT);
-  float pitchRaw = runPid(state->velocity.y, &this.pidVY, setpoint->velocity.y, DT);
+  float rollRaw  = runPid(state->velocity.x, &pid_this.pidVX, setpoint->velocity.x, DT);
+  float pitchRaw = runPid(state->velocity.y, &pid_this.pidVY, setpoint->velocity.y, DT);
 
   float yawRad = state->attitude.yaw * (float)M_PI / 180;
   attitude->pitch = -(rollRaw  * cosf(yawRad)) - (pitchRaw * sinf(yawRad));
@@ -214,89 +214,89 @@ void velocityController(float* thrust, attitude_t *attitude, setpoint_t *setpoin
   attitude->pitch = constrain(attitude->pitch, -rpLimit, rpLimit);
 
   // Thrust
-  float thrustRaw = runPid(state->velocity.z, &this.pidVZ, setpoint->velocity.z, DT);
+  float thrustRaw = runPid(state->velocity.z, &pid_this.pidVZ, setpoint->velocity.z, DT);
   // Scale the thrust and add feed forward term
-  *thrust = thrustRaw*thrustScale + this.thrustBase;
+  *thrust = thrustRaw*thrustScale + pid_this.thrustBase;
   // Check for minimum thrust
-  if (*thrust < this.thrustMin) {
-    *thrust = this.thrustMin;
+  if (*thrust < pid_this.thrustMin) {
+    *thrust = pid_this.thrustMin;
   }
 }
 
 void positionControllerResetAllPID()
 {
-  pidReset(&this.pidX.pid);
-  pidReset(&this.pidY.pid);
-  pidReset(&this.pidZ.pid);
-  pidReset(&this.pidVX.pid);
-  pidReset(&this.pidVY.pid);
-  pidReset(&this.pidVZ.pid);
+  pidReset(&pid_this.pidX.pid);
+  pidReset(&pid_this.pidY.pid);
+  pidReset(&pid_this.pidZ.pid);
+  pidReset(&pid_this.pidVX.pid);
+  pidReset(&pid_this.pidVY.pid);
+  pidReset(&pid_this.pidVZ.pid);
 }
 
 LOG_GROUP_START(posCtl)
 
-LOG_ADD(LOG_FLOAT, targetVX, &this.pidVX.pid.desired)
-LOG_ADD(LOG_FLOAT, targetVY, &this.pidVY.pid.desired)
-LOG_ADD(LOG_FLOAT, targetVZ, &this.pidVZ.pid.desired)
+LOG_ADD(LOG_FLOAT, targetVX, &pid_this.pidVX.pid.desired)
+LOG_ADD(LOG_FLOAT, targetVY, &pid_this.pidVY.pid.desired)
+LOG_ADD(LOG_FLOAT, targetVZ, &pid_this.pidVZ.pid.desired)
 
-LOG_ADD(LOG_FLOAT, targetX, &this.pidX.pid.desired)
-LOG_ADD(LOG_FLOAT, targetY, &this.pidY.pid.desired)
-LOG_ADD(LOG_FLOAT, targetZ, &this.pidZ.pid.desired)
+LOG_ADD(LOG_FLOAT, targetX, &pid_this.pidX.pid.desired)
+LOG_ADD(LOG_FLOAT, targetY, &pid_this.pidY.pid.desired)
+LOG_ADD(LOG_FLOAT, targetZ, &pid_this.pidZ.pid.desired)
 
-LOG_ADD(LOG_FLOAT, Xp, &this.pidX.pid.outP)
-LOG_ADD(LOG_FLOAT, Xi, &this.pidX.pid.outI)
-LOG_ADD(LOG_FLOAT, Xd, &this.pidX.pid.outD)
+LOG_ADD(LOG_FLOAT, Xp, &pid_this.pidX.pid.outP)
+LOG_ADD(LOG_FLOAT, Xi, &pid_this.pidX.pid.outI)
+LOG_ADD(LOG_FLOAT, Xd, &pid_this.pidX.pid.outD)
 
-LOG_ADD(LOG_FLOAT, Yp, &this.pidY.pid.outP)
-LOG_ADD(LOG_FLOAT, Yi, &this.pidY.pid.outI)
-LOG_ADD(LOG_FLOAT, Yd, &this.pidY.pid.outD)
+LOG_ADD(LOG_FLOAT, Yp, &pid_this.pidY.pid.outP)
+LOG_ADD(LOG_FLOAT, Yi, &pid_this.pidY.pid.outI)
+LOG_ADD(LOG_FLOAT, Yd, &pid_this.pidY.pid.outD)
 
-LOG_ADD(LOG_FLOAT, Zp, &this.pidZ.pid.outP)
-LOG_ADD(LOG_FLOAT, Zi, &this.pidZ.pid.outI)
-LOG_ADD(LOG_FLOAT, Zd, &this.pidZ.pid.outD)
+LOG_ADD(LOG_FLOAT, Zp, &pid_this.pidZ.pid.outP)
+LOG_ADD(LOG_FLOAT, Zi, &pid_this.pidZ.pid.outI)
+LOG_ADD(LOG_FLOAT, Zd, &pid_this.pidZ.pid.outD)
 
-LOG_ADD(LOG_FLOAT, VXp, &this.pidVX.pid.outP)
-LOG_ADD(LOG_FLOAT, VXi, &this.pidVX.pid.outI)
-LOG_ADD(LOG_FLOAT, VXd, &this.pidVX.pid.outD)
+LOG_ADD(LOG_FLOAT, VXp, &pid_this.pidVX.pid.outP)
+LOG_ADD(LOG_FLOAT, VXi, &pid_this.pidVX.pid.outI)
+LOG_ADD(LOG_FLOAT, VXd, &pid_this.pidVX.pid.outD)
 
-LOG_ADD(LOG_FLOAT, VZp, &this.pidVZ.pid.outP)
-LOG_ADD(LOG_FLOAT, VZi, &this.pidVZ.pid.outI)
-LOG_ADD(LOG_FLOAT, VZd, &this.pidVZ.pid.outD)
+LOG_ADD(LOG_FLOAT, VZp, &pid_this.pidVZ.pid.outP)
+LOG_ADD(LOG_FLOAT, VZi, &pid_this.pidVZ.pid.outI)
+LOG_ADD(LOG_FLOAT, VZd, &pid_this.pidVZ.pid.outD)
 
 LOG_GROUP_STOP(posCtl)
 
 PARAM_GROUP_START(velCtlPid)
 
-PARAM_ADD(PARAM_FLOAT, vxKp, &this.pidVX.pid.kp)
-PARAM_ADD(PARAM_FLOAT, vxKi, &this.pidVX.pid.ki)
-PARAM_ADD(PARAM_FLOAT, vxKd, &this.pidVX.pid.kd)
+PARAM_ADD(PARAM_FLOAT, vxKp, &pid_this.pidVX.pid.kp)
+PARAM_ADD(PARAM_FLOAT, vxKi, &pid_this.pidVX.pid.ki)
+PARAM_ADD(PARAM_FLOAT, vxKd, &pid_this.pidVX.pid.kd)
 
-PARAM_ADD(PARAM_FLOAT, vyKp, &this.pidVY.pid.kp)
-PARAM_ADD(PARAM_FLOAT, vyKi, &this.pidVY.pid.ki)
-PARAM_ADD(PARAM_FLOAT, vyKd, &this.pidVY.pid.kd)
+PARAM_ADD(PARAM_FLOAT, vyKp, &pid_this.pidVY.pid.kp)
+PARAM_ADD(PARAM_FLOAT, vyKi, &pid_this.pidVY.pid.ki)
+PARAM_ADD(PARAM_FLOAT, vyKd, &pid_this.pidVY.pid.kd)
 
-PARAM_ADD(PARAM_FLOAT, vzKp, &this.pidVZ.pid.kp)
-PARAM_ADD(PARAM_FLOAT, vzKi, &this.pidVZ.pid.ki)
-PARAM_ADD(PARAM_FLOAT, vzKd, &this.pidVZ.pid.kd)
+PARAM_ADD(PARAM_FLOAT, vzKp, &pid_this.pidVZ.pid.kp)
+PARAM_ADD(PARAM_FLOAT, vzKi, &pid_this.pidVZ.pid.ki)
+PARAM_ADD(PARAM_FLOAT, vzKd, &pid_this.pidVZ.pid.kd)
 
 PARAM_GROUP_STOP(velCtlPid)
 
 PARAM_GROUP_START(posCtlPid)
 
-PARAM_ADD(PARAM_FLOAT, xKp, &this.pidX.pid.kp)
-PARAM_ADD(PARAM_FLOAT, xKi, &this.pidX.pid.ki)
-PARAM_ADD(PARAM_FLOAT, xKd, &this.pidX.pid.kd)
+PARAM_ADD(PARAM_FLOAT, xKp, &pid_this.pidX.pid.kp)
+PARAM_ADD(PARAM_FLOAT, xKi, &pid_this.pidX.pid.ki)
+PARAM_ADD(PARAM_FLOAT, xKd, &pid_this.pidX.pid.kd)
 
-PARAM_ADD(PARAM_FLOAT, yKp, &this.pidY.pid.kp)
-PARAM_ADD(PARAM_FLOAT, yKi, &this.pidY.pid.ki)
-PARAM_ADD(PARAM_FLOAT, yKd, &this.pidY.pid.kd)
+PARAM_ADD(PARAM_FLOAT, yKp, &pid_this.pidY.pid.kp)
+PARAM_ADD(PARAM_FLOAT, yKi, &pid_this.pidY.pid.ki)
+PARAM_ADD(PARAM_FLOAT, yKd, &pid_this.pidY.pid.kd)
 
-PARAM_ADD(PARAM_FLOAT, zKp, &this.pidZ.pid.kp)
-PARAM_ADD(PARAM_FLOAT, zKi, &this.pidZ.pid.ki)
-PARAM_ADD(PARAM_FLOAT, zKd, &this.pidZ.pid.kd)
+PARAM_ADD(PARAM_FLOAT, zKp, &pid_this.pidZ.pid.kp)
+PARAM_ADD(PARAM_FLOAT, zKi, &pid_this.pidZ.pid.ki)
+PARAM_ADD(PARAM_FLOAT, zKd, &pid_this.pidZ.pid.kd)
 
-PARAM_ADD(PARAM_UINT16, thrustBase, &this.thrustBase)
-PARAM_ADD(PARAM_UINT16, thrustMin, &this.thrustMin)
+PARAM_ADD(PARAM_UINT16, thrustBase, &pid_this.thrustBase)
+PARAM_ADD(PARAM_UINT16, thrustMin, &pid_this.thrustMin)
 
 PARAM_ADD(PARAM_FLOAT, rpLimit,  &rpLimit)
 PARAM_ADD(PARAM_FLOAT, xyVelMax, &xyVelMax)
