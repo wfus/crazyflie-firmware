@@ -318,10 +318,59 @@ ifeq ($(SHELL),/bin/sh)
   COL_RESET=\033[m
 endif
 
+#################### TF_MICRO ###############################
+
+TF_MICRO_SRCS := \
+tfmicro/tensorflow/lite/experimental/micro/micro_error_reporter.cc \
+tfmicro/tensorflow/lite/experimental/micro/micro_mutable_op_resolver.cc \
+tfmicro/tensorflow/lite/experimental/micro/simple_tensor_allocator.cc \
+tfmicro/tensorflow/lite/experimental/micro/debug_log.cc \
+tfmicro/tensorflow/lite/experimental/micro/debug_log_numbers.cc \
+tfmicro/tensorflow/lite/experimental/micro/micro_interpreter.cc \
+tfmicro/tensorflow/lite/experimental/micro/kernels/depthwise_conv.cc \
+tfmicro/tensorflow/lite/experimental/micro/kernels/softmax.cc \
+tfmicro/tensorflow/lite/experimental/micro/kernels/all_ops_resolver.cc \
+tfmicro/tensorflow/lite/experimental/micro/kernels/fully_connected.cc \
+tfmicro/tensorflow/lite/c/c_api_internal.c \
+tfmicro/tensorflow/lite/core/api/error_reporter.cc \
+tfmicro/tensorflow/lite/core/api/flatbuffer_conversions.cc \
+tfmicro/tensorflow/lite/core/api/op_resolver.cc \
+tfmicro/tensorflow/lite/kernels/kernel_util.cc \
+tfmicro/tensorflow/lite/kernels/internal/quantization_util.cc  \
+tfmicro/tensorflow/lite/experimental/micro/examples/micro_speech/main.cc \
+tfmicro/tensorflow/lite/experimental/micro/examples/micro_speech/model_settings.cc \
+tfmicro/tensorflow/lite/experimental/micro/examples/micro_speech/audio_provider.cc \
+tfmicro/tensorflow/lite/experimental/micro/examples/micro_speech/feature_provider.cc \
+tfmicro/tensorflow/lite/experimental/micro/examples/micro_speech/preprocessor.cc \
+tfmicro/tensorflow/lite/experimental/micro/examples/micro_speech/no_features_data.cc \
+tfmicro/tensorflow/lite/experimental/micro/examples/micro_speech/yes_features_data.cc \
+tfmicro/tensorflow/lite/experimental/micro/examples/micro_speech/tiny_conv_model_data.cc \
+tfmicro/tensorflow/lite/experimental/micro/examples/micro_speech/recognize_commands.cc
+
+TF_MICRO_OBJS := \
+$(patsubst tfmicro/%.cc,tfmicro/%.o,$(patsubst tfmicro/%.c,tfmicro/%.o,$(TF_MICRO_SRCS)))
+
+TF_MICRO_INCLUDES := \
+-I. \
+-I./tfmicro \
+-I./tfmicro/ \
+-I./tfmicro/third_party/gemmlowp \
+-I./tfmicro/third_party/flatbuffers/include
+
 #################### Targets ###############################
 
 
 all: check_submodules build
+
+tfmicro: $(TF_MICRO_OBJS)
+	$(CXX) $(LDFLAGS) $(TF_MICRO_INCLUDES) $(TF_MICRO_OBJS) -o $@
+
+tfmicro/%.o: %.cc
+	$(CXX) $(CXXFLAGS) $(TF_MICRO_INCLUDES) -c $< -o $@	
+
+tfmicro/%.o: %.c
+	$(CC) $(CCFLAGS) $(TF_MICRO_INCLUDES) -c $< -o $@	
+
 build:
 # Each target is in a different line, so they are executed one after the other even when the processor has multiple cores (when the -j option for the make command is > 1). See: https://www.gnu.org/software/make/manual/html_node/Parallel.html
 	@$(MAKE) --no-print-directory clean_version

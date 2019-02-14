@@ -17,7 +17,7 @@ INCLUDES := \
 -I./third_party/gemmlowp \
 -I./third_party/flatbuffers/include
 
-CCFLAGS += --specs=nosys.specs -fpermissive
+CCFLAGS += --specs=nosys.specs
 CXXFLAGS += --specs=nosys.specs -Os -fpermissive -DNDEBUG --std=c++11 -g -DTF_LITE_STATIC_MEMORY
 
 LDFLAGS += -lm --specs=nosys.specs
@@ -29,11 +29,14 @@ LDFLAGS += -lm --specs=nosys.specs
 	$(CC) $(CCFLAGS) $(INCLUDES) -c $< -o $@
 
 micro_speech : $(OBJS)
-	$(CXX) $(LDFLAGS) $(OBJS) \
-	-o $@
+	$(CXX) -c $(LDFLAGS) $(OBJS) \
 
-all: micro_speech
+main_c_file: main.c
+	$(CC) $(CCFLAGS) $(INCLUDES) $(OBJS) main.c -o maintest
+
+all: micro_speech main_c_file
+
 
 clean :
-	-rm "*.o" $(OBJS) 
+	-rm $(OBJS) micro_speech
 

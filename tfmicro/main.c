@@ -24,7 +24,7 @@ limitations under the License.
 #include "tensorflow/lite/schema/schema_generated.h"
 #include "tensorflow/lite/version.h"
 
-int main(int argc, char* argv[]) {
+extern "C" int test_c_linkage_main() {
   // Set up logging.
   tflite::MicroErrorReporter micro_error_reporter;
   tflite::ErrorReporter* error_reporter = &micro_error_reporter;
