@@ -235,7 +235,7 @@ OBJ = $(FREERTOS_OBJ) $(PORT_OBJ) $(ST_OBJ) $(PROJ_OBJ) $(CRT0)
 
 ############### Compilation configuration ################
 AS = $(CROSS_COMPILE)as
-CC = $(CROSS_COMPILE)gcc
+CC = $(CROSS_COMPILE)g++
 LD = $(CROSS_COMPILE)gcc
 SIZE = $(CROSS_COMPILE)size
 OBJCOPY = $(CROSS_COMPILE)objcopy
@@ -265,7 +265,7 @@ ifeq ($(DEBUG), 1)
   CFLAGS += -Wconversion
 else
 	# Fail on warnings
-  CFLAGS += -Os -g3 -Werror
+  CFLAGS += -Os -g3 -w -fpermissive
 endif
 
 ifeq ($(LTO), 1)
@@ -277,7 +277,7 @@ CFLAGS += -DBOARD_REV_$(REV) -DESTIMATOR_NAME=$(ESTIMATOR)Estimator -DCONTROLLER
 CFLAGS += $(PROCESSOR) $(INCLUDES)
 
 
-CFLAGS += -Wall -Wmissing-braces -fno-strict-aliasing $(C_PROFILE) -std=gnu11
+CFLAGS += -Wmissing-braces -fno-strict-aliasing $(C_PROFILE)
 # Compiler flags to generate dependency files:
 CFLAGS += -MD -MP -MF $(BIN)/dep/$(@).d -MQ $(@)
 #Permits to remove un-used functions and global variables from output file
