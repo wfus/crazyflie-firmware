@@ -12,8 +12,20 @@ and set up bazel.
 ```bash
 git clone https://www.github.com/tensorflow/tensorflow
 cd tensorflow
-bazel build //tensorflow/contrib/lite:framework
+bazel build //tensorflow/contrib/lite:all
+git clone https://www.github.com/google/flatbuffers
 ```
+
+Then, we can train a MNIST model, and then convert it into a TFLite model. Then,
+to use this in TF-Micro, we will directly represent the model binary as a C++
+array and load it as a model.
+
+```bash
+python3 train.py
+python3 convert.py
+xxd -i lite_model_file.tflite > tf_micro_model.cpp
+```
+
 
 ### Troubleshooting
 
