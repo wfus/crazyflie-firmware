@@ -108,10 +108,7 @@ static bool isInit = false;
 
 static uint8_t nbrOwMems = 0;
 static OwSerialNum serialNbr;
-static const OwSerialNum eepromSerialNum =
-{
-  .data = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, EEPROM_I2C_ADDR}
-};
+static const OwSerialNum eepromSerialNum = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, EEPROM_I2C_ADDR};
 static const uint8_t noData[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 static CRTPPacket p;
 
