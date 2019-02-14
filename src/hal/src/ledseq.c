@@ -265,7 +265,9 @@ void ledseqStop(led_t led, const ledseq_t *sequence)
  */
 static void runLedseq( xTimerHandle xTimer )
 {
-  led_t led = (led_t)pvTimerGetTimerID(xTimer);
+  // microedit
+  // led_t led = (led_t)pvTimerGetTimerID(xTimer);
+  led_t led = 0;
   const ledseq_t *step;
   bool leave=false;
 
