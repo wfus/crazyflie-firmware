@@ -177,9 +177,10 @@ PROJ_OBJ += ledring12.o
 PROJ_OBJ += buzzdeck.o
 PROJ_OBJ += gtgps.o
 PROJ_OBJ += cppmdeck.o
-PROJ_OBJ += usddeck.o
+# microedit: disable to make c++ compliant.
+# PROJ_OBJ += usddeck.o
 PROJ_OBJ += zranger.o zranger2.o
-PROJ_OBJ += locodeck.o
+# PROJ_OBJ += locodeck.o
 PROJ_OBJ += clockCorrectionEngine.o
 PROJ_OBJ += lpsTwrTag.o
 PROJ_OBJ += lpsTdoa2Tag.o

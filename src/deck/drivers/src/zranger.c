@@ -135,13 +135,13 @@ bool zRangerReadRange(zDistance_t* zrange, const uint32_t tick)
 }
 
 static const DeckDriver zranger_deck = {
-  .vid = 0xBC,
-  .pid = 0x09,
-  .name = "bcZRanger",
-  .usedGpio = 0x0C,
-
-  .init = zRangerInit,
-  .test = zRangerTest,
+  0xBC,
+  0x09,
+  "bcZRanger",
+  0x0C,
+  0, 0, 0,
+  zRangerInit,
+  zRangerTest,
 };
 
 DECK_DRIVER(zranger_deck);

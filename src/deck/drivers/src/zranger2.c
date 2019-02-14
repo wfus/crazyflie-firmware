@@ -164,15 +164,15 @@ bool zRanger2ReadRange(zDistance_t* zrange, const uint32_t tick)
 }
 
 static const DeckDriver zranger2_deck = {
-  .vid = 0xBC,
-  .pid = 0x0E,
-  .name = "bcZRanger2",
-  .usedGpio = 0x0C,
-
-  .requiredEstimator = kalmanEstimator,
-
-  .init = zRanger2Init,
-  .test = zRanger2Test,
+  0xBC,
+  0x0E,
+  "bcZRanger2",
+  0,
+  0x0C,
+  kalmanEstimator,
+  0,
+  zRanger2Init,
+  zRanger2Test,
 };
 
 DECK_DRIVER(zranger2_deck);
