@@ -166,14 +166,13 @@ static bool oaTest()
 }
 
 static const DeckDriver oa_deck = {
-  .vid = 0xBC,
-  .pid = 0x0B,
-  .name = "bcOA",
-
-  .usedGpio = 0,  // FIXME: set the used pins
-
-  .init = oaInit,
-  .test = oaTest,
+  0xBC,
+  0x0B,
+  "bcOA",
+  0,  // FIXME: set the used pins
+  0, 0, 0,
+  oaInit,
+  oaTest,
 };
 
 DECK_DRIVER(oa_deck);

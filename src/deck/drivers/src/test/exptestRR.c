@@ -192,12 +192,13 @@ static bool exptestRRTestPin(EtGpio *etPin, bool test)
 }
 
 static const DeckDriver exptestRR_deck = {
-  .vid = 0xBC,
-  .pid = 0xFE,
-  .name = "bcExpTestRR",
+  0xBC,
+  0xFE,
+  "bcExpTestRR",
 
-  .usedGpio = 0,               // FIXME: Edit the used GPIOs
-
+  0,               // FIXME: Edit the used GPIOs
+  0, 0, 0,
+  0,
   .test = exptestRRRun,
 };
 

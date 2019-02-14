@@ -211,14 +211,15 @@ static bool mrTest()
 }
 
 static const DeckDriver multiranger_deck = {
-    .vid = 0xBC,
-    .pid = 0x0C,
-    .name = "bcMultiranger",
+    0xBC,
+    0x0C,
+    "bcMultiranger",
 
-    .usedGpio = 0, // FIXME: set the used pins
+    0, // FIXME: set the used pins
+    0, 0, 0,
 
-    .init = mrInit,
-    .test = mrTest,
+    mrInit,
+    mrTest,
 };
 
 DECK_DRIVER(multiranger_deck);

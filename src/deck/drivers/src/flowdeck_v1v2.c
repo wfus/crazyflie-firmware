@@ -163,15 +163,15 @@ static bool flowdeck1Test()
 }
 
 static const DeckDriver flowdeck1_deck = {
-  .vid = 0xBC,
-  .pid = 0x0A,
-  .name = "bcFlow",
-
-  .usedGpio = 0,  // FIXME: set the used pins
-  .requiredEstimator = kalmanEstimator,
-
-  .init = flowdeck1Init,
-  .test = flowdeck1Test,
+  0xBC,
+  0x0A,
+  "bcFlow",
+  0,
+  0,  // FIXME: set the used pins
+  kalmanEstimator,
+  0,
+  flowdeck1Init,
+  flowdeck1Test,
 };
 
 DECK_DRIVER(flowdeck1_deck);
@@ -208,15 +208,15 @@ static bool flowdeck2Test()
 }
 
 static const DeckDriver flowdeck2_deck = {
-  .vid = 0xBC,
-  .pid = 0x0F,
-  .name = "bcFlow2",
-
-  .usedGpio = 0,  // FIXME: set the used pins
-  .requiredEstimator = kalmanEstimator,
-
-  .init = flowdeck2Init,
-  .test = flowdeck2Test,
+  0xBC,
+  0x0F,
+  "bcFlow2",
+  0,
+  0,  // FIXME: set the used pins
+  kalmanEstimator,
+  0,
+  flowdeck2Init,
+  flowdeck2Test,
 };
 
 DECK_DRIVER(flowdeck2_deck);

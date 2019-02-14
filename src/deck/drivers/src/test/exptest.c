@@ -212,13 +212,14 @@ static bool exptestTestPin(EtGpio *etPin, bool test)
 }
 
 static const DeckDriver exptest_deck = {
-  .vid = 0xBC,
-  .pid = 0xFF,
-  .name = "bcExpTest",
+  0xBC,
+  0xFF,
+  "bcExpTest",
 
-  .usedGpio = 0,               // FIXME: Edit the used GPIOs
-
-  .test = exptestRun,
+  0,               // FIXME: Edit the used GPIOs
+  0, 0, 0,
+  0,
+  exptestRun,
 };
 
 DECK_DRIVER(exptest_deck);
