@@ -1,5 +1,8 @@
 build_info.json
 
+*.DS_Store
+tfmicro/*.o
+
 ^bin/dep/all
 bin/*
 .cproject
