@@ -59,14 +59,14 @@ static bool cppmdeckTest()
 }
 
 static const DeckDriver cppm_deck = {
-  .vid = 0,
-  .pid = 0,
-  .name = "bcCPPM",
-
-  .usedPeriph = DECK_USING_TIMER14,
-  .usedGpio = DECK_USING_PA7,
-  .init = cppmdeckInit,
-  .test = cppmdeckTest,
+  0,
+  0,
+  "bcCPPM",
+  DECK_USING_TIMER14,
+  DECK_USING_PA7,
+  0, 0,
+  cppmdeckInit,
+  cppmdeckTest,
 };
 
 DECK_DRIVER(cppm_deck);

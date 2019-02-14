@@ -96,18 +96,19 @@ static void usdTimer(xTimerHandle timer);
 // Low lever driver functions
 static sdSpiContext_t sdSpiContext =
     {
-        .initSpi = initSpi,
-        .setSlowSpiMode = setSlowSpiMode,
-        .setFastSpiMode = setFastSpiMode,
-        .xchgSpi = xchgSpi,
-        .rcvrSpiMulti = rcvrSpiMulti,
-        .xmitSpiMulti = xmitSpiMulti,
-        .csLow = csLow,
-        .csHigh = csHigh,
+        initSpi,
+        setSlowSpiMode,
+        setFastSpiMode,
+        xchgSpi,
+        rcvrSpiMulti,
+        xmitSpiMulti,
+        csLow,
+        csHigh,
 
-        .stat = STA_NOINIT,
-        .timer1 = 0,
-        .timer2 = 0
+        STA_NOINIT,
+        0,
+        0,
+        0
     };
 
 static DISKIO_LowLevelDriver_t fatDrv =
@@ -587,13 +588,14 @@ static void usdTimer(xTimerHandle timer)
 }
 
 static const DeckDriver usd_deck = {
-    .vid = 0xBC,
-    .pid = 0x08,
-    .name = "bcUSD",
-    .usedGpio = DECK_USING_MISO|DECK_USING_MOSI|DECK_USING_SCK|DECK_USING_IO_4,
-    .usedPeriph = DECK_USING_SPI,
-    .init = usdInit,
-    .test = usdTest,
+    0xBC,
+    0x08,
+    "bcUSD",
+    DECK_USING_MISO|DECK_USING_MOSI|DECK_USING_SCK|DECK_USING_IO_4,
+    DECK_USING_SPI,
+    0, 0,
+    usdInit,
+    usdTest,
 };
 
 DECK_DRIVER(usd_deck);
