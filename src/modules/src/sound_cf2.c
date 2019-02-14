@@ -298,22 +298,24 @@ typedef struct {
   Melody * melody;
 } EffectCall;
 
+//microedit
+//sound goes from 0 to 7
 static EffectCall effects[] = {
-    [SND_OFF] = {.call = &off},
-    [FACTORY_TEST] = {.call = &melodyplayer, .melody = &factory_test},
-    [SND_USB_CONN] = {.call = &melodyplayer, .melody = &usb_connect},
-    [SND_USB_DISC] = {.call = &melodyplayer, .melody = &usb_disconnect},
-    [SND_BAT_FULL] = {.call = &melodyplayer, .melody = &chg_done},
-    [SND_BAT_LOW] = {.call = &melodyplayer, .melody = &lowbatt},
-    [SND_STARTUP] = {.call = &melodyplayer, .melody = &startup},
-    [SND_CALIB] = {.call = &melodyplayer, .melody = &calibrated},
-    {.call = &melodyplayer, .melody = &range_slow},
-    {.call = &melodyplayer, .melody = &range_fast},
-    {.call = &melodyplayer, .melody = &starwars},
-    {.call = &melodyplayer, .melody = &valkyries},
-    {.call = &bypass},
-    {.call = &siren},
-    {.call = &tilt}
+    {&off, 0, &factory_test},
+    {&melodyplayer, 0, &factory_test},
+    {&melodyplayer, 0, &usb_connect},
+    {&melodyplayer, 0, &usb_disconnect},
+    {&melodyplayer, 0, &chg_done},
+    {&melodyplayer, 0, &lowbatt},
+    {&melodyplayer, 0, &startup},
+    {&melodyplayer, 0, &calibrated},
+    {&melodyplayer, 0, &range_slow},
+    {&melodyplayer, 0, &range_fast},
+    {&melodyplayer, 0, &starwars},
+    {&melodyplayer, 0, &valkyries},
+    {&bypass, 0, &valkyries},
+    {&siren, 0, &valkyries},
+    {&tilt, 0, &valkyries}
 };
 
 static xTimerHandle timer;

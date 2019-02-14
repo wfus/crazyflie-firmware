@@ -57,7 +57,10 @@
 #define LOG_ERROR(...)
 #endif
 
-
+//microedit
+//log goes from 1 to 8
+static const uint8_t typeLength[] = {0, 1, 2, 4, 1, 2, 4, 4, 2};
+/*
 static const uint8_t typeLength[] = {
   [LOG_UINT8]  = 1,
   [LOG_UINT16] = 2,
@@ -68,6 +71,7 @@ static const uint8_t typeLength[] = {
   [LOG_FLOAT]  = 4,
   [LOG_FP16]   = 2,
 };
+*/
 
 // Maximum log payload length (4 bytes are used for block id and timestamp)
 #define LOG_MAX_LEN 26
