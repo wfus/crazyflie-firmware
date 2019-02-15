@@ -39,6 +39,9 @@
 
 #include "led.h"
 
+// microedit for testing
+#include "motors.h"
+
 /* ST includes */
 #include "stm32fxxx.h"
 
@@ -54,6 +57,13 @@ int main()
   //Launch the system task that will initialize and start everything
   systemLaunch();
 
+  // microedit
+  for (int i = 0; i < 1000000; i++) {
+    motorsSetRatio(MOTOR_M1, 10000);
+    motorsSetRatio(MOTOR_M2, 10000);
+    motorsSetRatio(MOTOR_M3, 10000);
+    motorsSetRatio(MOTOR_M4, 10000);
+  }
   //Start the FreeRTOS scheduler
   vTaskStartScheduler();
 
