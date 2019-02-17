@@ -74,6 +74,33 @@ To create custom build options create a file called config.mk in the tools/make/
 folder and fill it with options. This is the main file that you will edit in
 order to add your code to be run on the crazyflie.
 
+
+## Integrating TFMicro and ML
+
+### Controlling Crazyflie Onboard
+
+We will be integrating TFMicro into this system by creating our own deck
+boot sequence and forcing the crazyflie to run that on startup. If you want
+to run your own code on startup, make a `.c` file in `src/deck/drivers/src/`.
+My example was the file `src/deck/drivers/src/sequence.c`. Then, to make sure
+that these files are compiled, make sure to add in the Makefile a line
+`PROJ_OBJ += sequence.o`. 
+
+Then, to make the crazyflie load this deck code in forcibly when it boots up,
+make sure to either add a line `CFLAGS += -DDECK_FORCE=<sequence name>` to
+the Makefile or the file `tools/make/config.mk` before compiling. Note that
+`<sequence name>` is set in the `sequence.c` file - look at all of the deck
+driver code examples in the same directory to see how this variable is set. 
+
+### Integrating TF-Micro
+
+All of the code for the crazyflie is in C, while we require C++ (and a few
+C++11 extensions) for compiling TF Micro. The easiest way to deal with this
+is to compile TF Micro, and create a wrapper class to compile with C symbols
+and call it from your `sequence.c` file. More information about how to
+convert ML models to the correct format can be found in the folder `tfmicro/`,
+and [here](tfmicro/README.md).
+
 ## Useful Links
 
 * https://github.com/bitcraze/crazyflie-firmware-experimental/blob/icra-2017/src/modules/src/retrace.c#L157
