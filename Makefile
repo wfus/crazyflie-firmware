@@ -190,6 +190,10 @@ PROJ_OBJ += oa.o
 PROJ_OBJ += multiranger.o
 PROJ_OBJ += lighthouse.o
 
+# Add our TF-Micro demo into compiled as a deck
+# also force the crazyflie to load our sequence
+PROJ_OBJ += sequence.o
+
 ifeq ($(LPS_TDOA_ENABLE), 1)
 CFLAGS += -DLPS_TDOA_ENABLE
 endif
