@@ -102,4 +102,3 @@ and [here](tfmicro/README.md).
 * https://forum.bitcraze.io/viewtopic.php?t=2723
 
 * https://forum.bitcraze.io/viewtopic.php?f=6&t=2648&p=13352&hilit=demo#p13352
-

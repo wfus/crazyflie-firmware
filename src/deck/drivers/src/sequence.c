@@ -1,3 +1,5 @@
+/* TFMicro Test Script: Tests to see if we can control the motors using the
+attached FlowDeck and get measurements. */
 #include "deck.h"
 #include "system.h"
 #include "commander.h"
@@ -14,10 +16,8 @@ static void setHoverSetpoint(setpoint_t *setpoint, float vx, float vy, float z, 
   setpoint->mode.z = modeAbs;
   setpoint->position.z = z;
 
-
   setpoint->mode.yaw = modeVelocity;
   setpoint->attitudeRate.yaw = yawrate;
-
 
   setpoint->mode.x = modeVelocity;
   setpoint->mode.y = modeVelocity;
@@ -37,55 +37,59 @@ static void sequenceTask()
   vTaskDelay(M2T(1000));
   DEBUG_PRINT("Starting sequence ...\n");
 
-  for (i=0; i<20; i++) {
+  // hover for first 2 seconds to 0.2 meters
+  for (i = 0; i < 20; i++) {
     setHoverSetpoint(&setpoint, 0, 0, 0.2, 0);
     commanderSetSetpoint(&setpoint, 3);
     vTaskDelay(M2T(100));
   }
 
-  for (i=0; i<20; i++) {
+  // hover for 2 seconds to 0.4 meters
+  for (i = 0; i < 20; i++) {
     setHoverSetpoint(&setpoint, 0, 0, 0.4, 0);
     commanderSetSetpoint(&setpoint, 3);
     vTaskDelay(M2T(100));
   }
 
-  for (i=0; i<50; i++) {
-    setHoverSetpoint(&setpoint, 0.5, 0, 0.4, 72);
+  // go 0.2 meters to the positive x axis with yawrate
+  // 72, which is basically speed 
+  for (i = 0; i < 50; i++) {
+    setHoverSetpoint(&setpoint, 0.2, 0, 0.4, 72);
     commanderSetSetpoint(&setpoint, 3);
     vTaskDelay(M2T(100));
   }
 
-  for (i=0; i<50; i++) {
-    setHoverSetpoint(&setpoint, 0.5, 0, 0.4, -72);
+  for (i = 0; i < 50; i++) {
+    setHoverSetpoint(&setpoint, 0.2, 0, 0.4, -72);
     commanderSetSetpoint(&setpoint, 3);
     vTaskDelay(M2T(100));
   }
 
-  for (i=0; i<30; i++) {
+  for (i = 0; i < 30; i++) {
     setHoverSetpoint(&setpoint, 0, 0, 0.4, 0);
     commanderSetSetpoint(&setpoint, 3);
     vTaskDelay(M2T(100));
   }
 
-  for (i=0; i<30; i++) {
+  // go to 0.2 meters first to land gracefully
+  for (i = 0; i < 30; i++) {
     setHoverSetpoint(&setpoint, 0, 0, 0.2, 0);
     commanderSetSetpoint(&setpoint, 3);
     vTaskDelay(M2T(100));
   }
-  
-  while(1) {
+
+  // end of routine.
+  for (;;) {
     vTaskDelay(1000);
   }
 }
 
-static void sequenceInit()
-{
+static void sequenceInit() {
   xTaskCreate(sequenceTask, "sequence", 2*configMINIMAL_STACK_SIZE, NULL,
               /*priority*/3, NULL);
 }
 
-static bool sequenceTest()
-{
+static bool sequenceTest() {
   return true;
 }
 
