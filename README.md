@@ -1,9 +1,16 @@
+<<<<<<< HEAD
 # TF MicroFlie
 
 This is a fork of the crazyflie 2.0 firmware, which is available
 [here](https://www.github.com/bitcraze/crazyflie-firmware). We will mainly
 be using custom firmware to run small ML models locally on the STM32F4
 microcontroller on the actual Crazyflie.
+=======
+# Crazyflie Firmware  [![Build Status](https://api.travis-ci.org/bitcraze/crazyflie-firmware.svg)](https://travis-ci.org/bitcraze/crazyflie-firmware)
+
+This project contains the source code for the firmware used in the Crazyflie range of platforms, including
+the Crazyflie 2.X and the Roadrunner.
+>>>>>>> 35df4d727111621af902d7029f76b39b406c17e8
 
 ## Installation
 
@@ -50,13 +57,20 @@ git submodule update
 
 ## Compiling
 
-### Crazyflie 2.0
+### Crazyflie 2.X
 
+<<<<<<< HEAD
 To make the project, you can just type in `make`. Then, we will want to flash
 the Crazyflie. To do this, you will need to following the installation
 instructions for the radio bootloader and install the python libraries, 
 available [here](https://www.github.com/bitcraze/crazyflie-client-python) and
 [here](https://www.github.com/bitcraze/crazyflie-lib-python).
+=======
+This is the default build so just running ```make``` is enough or:
+```bash
+make PLATFORM=cf2
+```
+>>>>>>> 35df4d727111621af902d7029f76b39b406c17e8
 
 Once all of those steps are done and the python libraries for bootloading are
 installed, you can now compile and flash the image onto the crazyflie. Make
@@ -64,10 +78,29 @@ sure that the crazyflie is in bootloader mode (usually by turning it off and
 then holding the power button for 3 seconds).
 
 ```bash
+<<<<<<< HEAD
 make clean
 make -j7
 make cload
+=======
+tb make PLATFORM=cf2
+>>>>>>> 35df4d727111621af902d7029f76b39b406c17e8
 ```
+
+### Roadrunner
+
+Use the ```tag``` platform
+
+```bash
+make PLATFORM=tag
+```
+
+or with the toolbelt
+
+```bash
+tb make PLATFORM=tag
+```
+
 
 ### config.mk
 To create custom build options create a file called config.mk in the tools/make/
